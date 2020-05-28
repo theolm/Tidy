@@ -1,25 +1,61 @@
 import 'dart:io';
 
-final _ANDROID_PACKAGE = 'com/theomota/tidy';
+import 'package:Tidy/output.dart' as _output;
+import 'package:Tidy/run.dart' as _run;
+import 'package:Tidy/templates.dart' as _template;
 
-void generateActivity(String fileName) {
-  final pwd = Platform.environment["PWD"];
+void generate(List<String> commands) {
+  switch (commands[0]) {
+    case 'a':
+      if (commands.length < 2) {
+        _output.printError('Comando inválido.');
+      } else {
+        activity(commands[1]);
+      }
+      break;
+    case 'f':
+      break;
+    default:
+      _output.printError('Comando inválido.');
+  }
+}
+
+void activity(String filePath) {
+  final fileName = filePath.split('/').last;
+  final pwd = Platform.environment['PWD'];
   final androidDefault = 'app/src/main/java';
-  final completePath = '$pwd/$androidDefault/$_ANDROID_PACKAGE';
+  final bundle = _run.androidBundle.replaceAll('.', '/');
+  final completePath = '$pwd/$androidDefault/$bundle';
 
-  _generateActivity('$completePath/${fileName}Activity.kt');
-  _generateView('$completePath/${fileName}View.kt');
-  _generatePresenter('$completePath/${fileName}Presenter.kt');
+  final activity = _createFile('${completePath}/${filePath}Activity.kt');
+  final view = _createFile('${completePath}/${filePath}View.kt');
+  final presenter = _createFile('${completePath}/${filePath}Presenter.kt');
+
+  _writeToFile(
+      _template.activityTemplate(fileName, _run.androidBundle), activity);
+  _writeToFile(
+      _template.presenterTemplate(fileName, _run.androidBundle), presenter);
+  _writeToFile(_template.viewTemplate(fileName, _run.androidBundle), view);
+
+  layout('activity_$fileName');
 }
 
-void _generateActivity(String fileName) {
-  print(fileName);
+void layout(String fileName) {
+  final pwd = Platform.environment['PWD'];
+  final androidResDefault = 'app/src/main/res/layout';
+  final completePath = '$pwd/$androidResDefault';
+
+  final layout = _createFile('${completePath}/${fileName.toLowerCase()}.xml');
+  _writeToFile(_template.layoutTemplate(), layout);
 }
 
-void _generateView(String fileName) {
-  print(fileName);
+File _createFile(String path) {
+  final file = File(path);
+  file.createSync(recursive: true);
+  _output.printSuccess('Arquivo gerado com sucesso: $path');
+  return file;
 }
 
-void _generatePresenter(String fileName) {
-  print(fileName);
+void _writeToFile(String content, File file) {
+  file.writeAsStringSync(content);
 }
