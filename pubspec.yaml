@@ -1,6 +1,6 @@
-name: Tidy
+name: tidy
 description: CLI package manager and template for Android. Inspired by slidy.
-version: 0.0.1
+version: 0.0.2
 homepage: https://https://github.com/theolm/Tidy
 
 environment:

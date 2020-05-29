@@ -1,7 +1,7 @@
-import 'package:Tidy/generator.dart' as _generator;
-import 'package:Tidy/help.dart' as _help;
-import 'package:Tidy/output.dart' as _output;
-import 'package:Tidy/run.dart' as _run;
+import 'package:tidy/src/generator.dart' as _generator;
+import 'package:tidy/src/help.dart' as _help;
+import 'package:tidy/src/output.dart' as _output;
+import 'package:tidy/src/run.dart' as _run;
 
 void parseCommand(String command) {
   if (command.isEmpty) {

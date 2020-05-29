@@ -1,4 +1,4 @@
-import 'package:Tidy/output.dart' as _output;
+import 'package:tidy/src/output.dart' as _output;
 
 void executeHelp() {
   _output

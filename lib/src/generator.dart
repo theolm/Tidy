@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:Tidy/output.dart' as _output;
-import 'package:Tidy/run.dart' as _run;
-import 'package:Tidy/templates.dart' as _template;
+import 'package:tidy/src/output.dart' as _output;
+import 'package:tidy/src/run.dart' as _run;
+import 'package:tidy/src/templates.dart' as _template;
 
 void generate(List<String> commands) {
   switch (commands[0]) {
