@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:tidy/src/output.dart' as _output;
-import 'package:tidy/src/commands.dart' as _commands;
+import 'output.dart' as _output;
+import 'commands.dart' as _commands;
 
 var running = true;
 String androidBundle;
